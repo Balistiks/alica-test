@@ -22,7 +22,7 @@ services:
       dockerfile: ../buildfiles/Dockerfile
     restart: always
     volumes:
-      - ./back:/app
+      - ./back/src:/app/src
     ports:
       - '3000:3000'
     networks:
