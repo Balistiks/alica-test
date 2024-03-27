@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  nginx:
+    image: nginx:alpine
+    restart: always
+    volumes:
+      - ./nginx/logs:/var/logs/nginx
+      - ./upload:/var/www/img:ro
+      - ./nginx:/etc/nginx
+    depends_on:
+      - back
+    networks:
+      alica:
+        aliases:
+          - nginx
+    ports:
+      - '80:80'
+  back:
+    build:
+      context: back
+      dockerfile: ../buildfiles/Dockerfile
+    restart: always
+    volumes:
+      - ./back:/app
+    ports:
+      - '3000:3000'
+    networks:
+      alica:
+        aliases:
+          - back
+
+networks:
+  alica:
+    driver: bridge
